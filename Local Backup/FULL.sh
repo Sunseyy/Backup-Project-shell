@@ -6,9 +6,15 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
+# Vérifier si le nombre d'arguments est correct
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <source_directory> <backup_directory>"
+    exit 1
+fi
+
 # Variables
-SOURCE_DIR="/home/sunsey/source"  # Répertoire à sauvegarder
-BACKUP_DIR="/home/sunsey/Full Backup"  # Destination de la sauvegarde
+SOURCE_DIR="$1"  # Répertoire à sauvegarder
+BACKUP_DIR="$2"  # Destination de la sauvegarde
 DATE=$(date +"%Y-%m-%d_%H-%M-%S")  # Date et heure actuelle pour le nom de fichier de sauvegarde
 BACKUP_NAME="backup_$DATE.tar.gz"  # Nom du fichier de sauvegarde
 LOG_FILE="$BACKUP_DIR/backup_$DATE.log"  # Fichier de log

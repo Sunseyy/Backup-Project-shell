@@ -1,8 +1,14 @@
 #!/bin/bash
 
-# Define source and destination directories
-SOURCE="/home/sunsey/source"  # This is the directory to back up
-DESTINATION="/home/sunsey/Backup"  # This is where the backup will be stored
+# Check for the correct number of arguments
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <source_directory> <backup_directory>"
+    exit 1
+fi
+
+# Define source and destination directories from command-line arguments
+SOURCE="$1"  # This is the directory to back up
+DESTINATION="$2"  # This is where the backup will be stored
 LOG_FILE="$DESTINATION/backup_log.txt"  # Log file for backup operations
 
 # Get the current date for backup filenames
@@ -19,16 +25,16 @@ create_full_backup() {
     echo "Creating full backup of $SOURCE..." | tee -a "$LOG_FILE"
     tar --create --file="$FULL_BACKUP_FILE" --listed-incremental="$SNAPSHOT_FILE" "$SOURCE" && \
     echo "Full backup created: $FULL_BACKUP_FILE" | tee -a "$LOG_FILE"
-    echo"-----------------------------------" | tee -a "$LOG_FILE"
+    echo "-----------------------------------" | tee -a "$LOG_FILE"
 }
 
 # Function to create an incremental backup
 create_incremental_backup() {
     echo "Creating incremental backup of $SOURCE..." | tee -a "$LOG_FILE"
-    echo"-----------------------------------" | tee -a "$LOG_FILE"
+    echo "-----------------------------------" | tee -a "$LOG_FILE"
     tar --create --file="$INCREMENTAL_BACKUP_FILE" --listed-incremental="$SNAPSHOT_FILE" "$SOURCE" && \
     echo "Incremental backup created: $INCREMENTAL_BACKUP_FILE" | tee -a "$LOG_FILE"
-    echo"-----------------------------------" | tee -a "$LOG_FILE"
+    echo "-----------------------------------" | tee -a "$LOG_FILE"
 }
 
 # Create log file if it does not exist

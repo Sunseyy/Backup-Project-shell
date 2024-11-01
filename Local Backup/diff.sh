@@ -1,8 +1,14 @@
 #!/bin/bash
 
-# Directories for backup
-SOURCE_DIR="/home/sunsey/source"
-BACKUP_DIR="/home/sunsey/diff_backup"
+# Check for the correct number of arguments
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <source_directory> <backup_directory>"
+    exit 1
+fi
+
+# Directories for backup from command-line arguments
+SOURCE_DIR="$1"
+BACKUP_DIR="$2"
 
 # Current date and time for the backup
 CURRENT_DATE=$(date +"%Y-%m-%d_%H-%M-%S")
